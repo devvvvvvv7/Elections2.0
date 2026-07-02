@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("schoolElection_theme");
+        if (t === "light") document.documentElement.setAttribute("data-theme", "light");
+      } catch (e) {}
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Council Election — Home</title>
+  <meta name="description" content="Official School Election Management System" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/landing.css" />
+</head>
+<body>
+
+  <button class="theme-toggle-btn" id="themeToggleBtn" type="button" aria-label="Toggle dark/light theme" title="Toggle dark/light theme">
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke-linecap="round"/></svg>
+  </button>
+
+  <!-- Loading screen -->
+  <div class="loader-overlay" id="loaderOverlay">
+    <div class="seal">
+      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle class="seal-ring" cx="32" cy="32" r="27"/>
+        <path class="seal-check" d="M20 33 L28 41 L45 23"/>
+      </svg>
+    </div>
+    <div class="loader-text">Loading election portal…</div>
+  </div>
+
+  <div class="landing-shell">
+    <header class="container landing-nav">
+      <div class="nav-status">
+        <span class="status-badge status-not_started" id="statusBadge"><span class="dot"></span>Loading…</span>
+      </div>
+      <div class="nav-time" data-clock-time>--:--:--</div>
+    </header>
+
+    <main class="landing-hero">
+      <div class="school-emblem" id="schoolEmblem">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10V6z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <p class="school-name" data-school-name>Greenwood High School</p>
+      <h1 class="fade-up">Student Council<br />General Election 2026</h1>
+      <p class="hero-sub fade-up" style="animation-delay:80ms" data-election-title>
+        A secure, transparent, real-time voting system for our school community.
+      </p>
+
+      <div class="portal-grid stagger">
+        <a class="glass-card interactive portal-card" href="voting.html" style="--d:0">
+          <div class="portal-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12l2.5 2.5L16 9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Voting PC</h3>
+          <p>The official polling station terminal. Students cast their vote here under staff supervision.</p>
+          <span class="portal-cta">Open Voting Booth
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+
+        <a class="glass-card interactive portal-card" href="control-admin.html" style="--d:1">
+          <div class="portal-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10V6z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Control Admin</h3>
+          <p>Start, stop, and manage the election in real time. Restricted to election officials.</p>
+          <span class="portal-cta">Election Control
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+
+        <a class="glass-card interactive portal-card" href="results-admin.html" style="--d:2">
+          <div class="portal-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Results Admin</h3>
+          <p>View live tallies, winners and turnout after polls close. Restricted to results officials.</p>
+          <span class="portal-cta">View Results
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+      </div>
+    </main>
+
+    <footer class="landing-footer">
+      Secured by Firebase Authentication &amp; Realtime Database · School Election Management System
+    </footer>
+  </div>
+
+  <!-- Firebase SDK (compat) -->
+  <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-database-compat.js"></script>
+
+  <script src="js/firebase-config.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/landing.js"></script>
+</body>
+</html>

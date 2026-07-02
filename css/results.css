@@ -1,0 +1,295 @@
+/* ==========================================================================
+   RESULTS.CSS — Results Admin specific styles
+   ========================================================================== */
+
+.results-locked {
+  min-height: calc(100vh - 70px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 24px;
+}
+.results-locked .lock-icon {
+  width: 84px; height: 84px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-strong);
+  margin-bottom: 26px;
+  color: var(--color-text-dim);
+}
+.results-locked .lock-icon svg { width: 38px; height: 38px; }
+.results-locked h2 { font-size: 1.8rem; margin-bottom: 10px; }
+.results-locked p { color: var(--color-text-dim); max-width: 440px; margin-bottom: 4px; }
+
+.results-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 6px;
+}
+
+.position-results {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.position-result-card { padding: 26px; }
+.position-result-card .pr-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.position-result-card .pr-head h3 { font-size: 1.15rem; }
+.position-result-card .pr-meta { font-family: var(--font-mono); font-size: 0.76rem; color: var(--color-text-faint); }
+
+.pr-body {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 28px;
+  align-items: center;
+}
+.pr-chart-wrap { position: relative; height: 220px; }
+
+.candidate-result-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+.candidate-result-row:last-child { border-bottom: none; }
+.candidate-result-row img {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--color-border-strong);
+}
+.candidate-result-row.is-winner img { border-color: var(--color-gold); }
+.cr-info { flex: 1; min-width: 0; }
+.cr-info .cr-name {
+  display: flex; align-items: center; gap: 8px;
+  font-weight: 600; font-size: 0.92rem;
+}
+.cr-info .cr-bar-track {
+  height: 6px;
+  border-radius: 99px;
+  background: var(--color-surface);
+  margin-top: 7px;
+  overflow: hidden;
+}
+.cr-info .cr-bar-fill {
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--color-gold), var(--color-gold-soft));
+  width: 0%;
+  transition: width 900ms var(--ease-out);
+}
+.cr-votes {
+  font-family: var(--font-mono);
+  font-size: 0.86rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.cr-votes .cr-pct { color: var(--color-text-faint); font-weight: 400; font-size: 0.74rem; }
+
+.winner-crown {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 9px;
+  border-radius: var(--radius-full);
+  background: var(--color-gold-dim);
+  color: var(--color-gold-soft);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.winner-crown svg { width: 11px; height: 11px; }
+
+.tie-badge {
+  background: rgba(91,157,255,0.16);
+  color: var(--color-blue);
+}
+
+.results-toolbar { margin-bottom: 18px; }
+
+.live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.74rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.live-badge .dot { width: 7px; height: 7px; border-radius: 50%; }
+.live-badge.is-live { background: rgba(45,212,191,0.14); color: var(--color-teal); }
+.live-badge.is-live .dot { background: var(--color-teal); }
+.live-badge.is-live .dot.pulse { animation: live-pulse 1.6s ease-in-out infinite; }
+.live-badge.is-final { background: var(--color-gold-dim); color: var(--color-gold-soft); }
+.live-badge.is-final .dot { background: var(--color-gold); }
+
+@keyframes live-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(45,212,191,0.5); }
+  50% { box-shadow: 0 0 0 5px rgba(45,212,191,0); }
+}
+
+/* ---- Winners spotlight + turnout gauge --------------------------------------- */
+.spotlight-row {
+  display: flex;
+  gap: 18px;
+  align-items: stretch;
+  flex-wrap: wrap;
+}
+
+.turnout-gauge-card {
+  flex: 0 0 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 18px;
+  text-align: center;
+}
+.gauge-wrap { position: relative; width: 150px; height: 150px; }
+.gauge-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.gauge-value {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  font-weight: 600;
+  color: var(--color-gold-soft);
+  line-height: 1.1;
+}
+.gauge-label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-faint);
+  margin-top: 2px;
+}
+.gauge-sub {
+  margin-top: 14px;
+  font-size: 0.78rem;
+  color: var(--color-text-dim);
+}
+
+.winners-grid {
+  flex: 1;
+  min-width: 280px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 14px;
+}
+.winner-spot-card {
+  padding: 20px 16px;
+  text-align: center;
+}
+.winner-photo-ring {
+  width: 76px; height: 76px;
+  border-radius: 50%;
+  padding: 4px;
+  margin: 0 auto 14px;
+  background: conic-gradient(var(--color-gold) calc(var(--pct, 0) * 1%), var(--color-border) 0);
+}
+.winner-photo-ring img {
+  width: 100%; height: 100%;
+  display: block;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--color-bg-elevated);
+}
+.winner-spot-position {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-faint);
+  margin-bottom: 6px;
+}
+.winner-spot-name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-weight: 600;
+  font-size: 0.92rem;
+  margin-bottom: 4px;
+}
+.winner-spot-name svg { width: 13px; height: 13px; color: var(--color-gold); flex-shrink: 0; }
+.winner-spot-stats {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--color-text-dim);
+}
+.winner-spot-card.is-tie .winner-photo-ring { background: conic-gradient(var(--color-blue) calc(var(--pct, 0) * 1%), var(--color-border) 0); }
+.winner-spot-card.is-tie .winner-spot-name svg { color: var(--color-blue); }
+
+@media (max-width: 700px) {
+  .spotlight-row { flex-direction: column; }
+  .turnout-gauge-card { flex: none; }
+}
+
+/* ---- Full results table ----------------------------------------------------- */
+.results-toolbar-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* ---- Election Archive ------------------------------------------------------- */
+.archive-section-hint { color: var(--color-text-dim); font-size: 0.84rem; margin: -8px 0 14px; }
+.archive-list { max-height: none; }
+.archive-row { justify-content: space-between; }
+
+.archive-detail-modal { max-width: 640px; text-align: left; }
+.archive-detail-modal h3 { text-align: center; margin-bottom: 4px; }
+.archive-detail-sub { text-align: center; margin-top: 0; margin-bottom: 16px !important; }
+.archive-detail-scroll { max-height: 360px; margin-bottom: 20px; }
+.archive-position-head {
+  font-weight: 700;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-gold-soft);
+  background: var(--color-gold-dim);
+  padding-top: 10px !important;
+}
+
+.results-table-card { padding: 8px 0 4px; overflow-x: auto; }
+.results-table { width: 100%; border-collapse: collapse; min-width: 560px; }
+.results-table thead th {
+  text-align: left;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-faint);
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--color-border);
+}
+.results-table tbody td {
+  padding: 13px 24px;
+  font-size: 0.86rem;
+  border-bottom: 1px solid var(--color-border);
+}
+.results-table tbody tr:last-child td { border-bottom: none; }
+.results-table tbody tr:hover { background: var(--color-surface); }
+
+@media (max-width: 900px) {
+  .pr-body { grid-template-columns: 1fr; }
+  .pr-chart-wrap { height: 200px; }
+}

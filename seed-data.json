@@ -1,0 +1,33 @@
+{
+  "election": {
+    "meta": {
+      "schoolName": "Greenwood High School",
+      "electionTitle": "Student Council General Election 2026",
+      "logoUrl": "",
+      "status": "not_started",
+      "totalEligibleVoters": 850,
+      "startedAt": null,
+      "stoppedAt": null,
+      "endedAt": null
+    },
+    "security": {
+      "pcPin": "2468"
+    },
+    "positions": {
+      "pos_president": { "title": "School President", "order": 1 },
+      "pos_vp": { "title": "Vice President", "order": 2 },
+      "pos_secretary": { "title": "General Secretary", "order": 3 },
+      "pos_treasurer": { "title": "Treasurer", "order": 4 }
+    },
+    "candidates": {
+      "cand_001": { "name": "Aanya Sharma", "positionId": "pos_president", "photoUrl": "", "order": 1 },
+      "cand_002": { "name": "Rohan Mehta", "positionId": "pos_president", "photoUrl": "", "order": 2 },
+      "cand_003": { "name": "Kavya Iyer", "positionId": "pos_vp", "photoUrl": "", "order": 1 },
+      "cand_004": { "name": "Arjun Nair", "positionId": "pos_vp", "photoUrl": "", "order": 2 },
+      "cand_005": { "name": "Diya Patel", "positionId": "pos_secretary", "photoUrl": "", "order": 1 },
+      "cand_006": { "name": "Vihaan Rao", "positionId": "pos_secretary", "photoUrl": "", "order": 2 },
+      "cand_007": { "name": "Saanvi Gupta", "positionId": "pos_treasurer", "photoUrl": "", "order": 1 },
+      "cand_008": { "name": "Kabir Singh", "positionId": "pos_treasurer", "photoUrl": "", "order": 2 }
+    }
+  }
+}

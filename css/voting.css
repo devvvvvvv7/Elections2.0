@@ -1,0 +1,309 @@
+/* ==========================================================================
+   VOTING.CSS — Voting PC kiosk (voting.html)
+   ========================================================================== */
+
+.kiosk-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.kiosk-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 28px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.kiosk-topbar .kiosk-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.kiosk-topbar .kiosk-brand .emblem-mini {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--color-gold-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-gold);
+  overflow: hidden;
+}
+.kiosk-topbar .kiosk-brand .emblem-mini img { width: 100%; height: 100%; object-fit: cover; }
+.kiosk-topbar .kiosk-brand .emblem-mini svg { width: 18px; height: 18px; }
+
+/* ---- PC PIN auth screen ------------------------------------------------- */
+.pin-screen {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.pin-card {
+  width: 100%;
+  max-width: 380px;
+  padding: 40px 34px;
+  text-align: center;
+}
+.pin-card .seal { margin: 0 auto 20px; }
+.pin-card h2 { font-size: 1.5rem; margin-bottom: 8px; }
+.pin-card p { color: var(--color-text-dim); font-size: 0.88rem; margin-bottom: 26px; }
+
+.pin-input-row {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 22px;
+}
+.pin-digit {
+  width: 46px;
+  height: 56px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 1.4rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border-strong);
+  background: var(--color-bg-soft);
+  color: var(--color-text);
+  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
+}
+.pin-digit:focus {
+  border-color: var(--color-gold);
+  box-shadow: 0 0 0 3px var(--color-gold-dim);
+  outline: none;
+}
+
+/* ---- Ballot status banners (closed / not started / ended) ----------------- */
+.ballot-locked {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 24px;
+}
+.ballot-locked .lock-icon {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-strong);
+  margin-bottom: 26px;
+  color: var(--color-text-dim);
+}
+.ballot-locked .lock-icon svg { width: 38px; height: 38px; }
+.ballot-locked h2 { font-size: 1.8rem; margin-bottom: 10px; }
+.ballot-locked p { color: var(--color-text-dim); max-width: 420px; }
+
+/* ---- Ballot ----------------------------------------------------------------- */
+.ballot-wrap {
+  flex: 1;
+  padding: 36px 24px 60px;
+}
+.ballot-header {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 36px;
+}
+.ballot-header h1 {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  margin-bottom: 10px;
+}
+.ballot-header p { color: var(--color-text-dim); font-size: 0.92rem; }
+
+.positions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  max-width: 880px;
+  margin: 0 auto;
+}
+
+.position-block { padding: 28px; }
+
+.position-block .position-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.position-block .position-title h2 { font-size: 1.2rem; }
+.position-block .position-index {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  background: var(--color-gold-dim);
+  color: var(--color-gold-soft);
+  flex-shrink: 0;
+}
+
+.candidates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.candidate-card {
+  position: relative;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--color-border);
+  background: var(--color-surface);
+  padding: 18px;
+  text-align: center;
+  transition: border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out), background var(--dur-fast);
+}
+.candidate-card:hover { transform: translateY(-2px); border-color: var(--color-border-strong); }
+.candidate-card.selected {
+  border-color: var(--color-gold);
+  background: var(--color-gold-dim);
+  box-shadow: var(--shadow-gold-glow);
+}
+
+.candidate-card input[type="radio"] {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 20px;
+  height: 20px;
+  accent-color: var(--color-gold);
+  cursor: pointer;
+}
+
+.candidate-photo {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  margin: 0 auto 12px;
+  object-fit: cover;
+  border: 2px solid var(--color-border-strong);
+  background: var(--color-bg-soft);
+}
+.candidate-card.selected .candidate-photo { border-color: var(--color-gold); }
+
+.candidate-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.ballot-actions {
+  max-width: 880px;
+  margin: 36px auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.ballot-actions .progress-hint {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--color-text-faint);
+}
+
+/* ---- Success / Thank you overlay -------------------------------------------- */
+.success-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9990;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: radial-gradient(circle at 50% 40%, rgba(212,175,55,0.10), var(--color-bg) 70%);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--dur-slow) var(--ease-in-out), visibility var(--dur-slow);
+}
+.success-overlay.show { opacity: 1; visibility: visible; }
+
+.stamp-wrap {
+  width: 140px;
+  height: 140px;
+  margin-bottom: 30px;
+  transform: translateY(-60px) scale(0.6) rotate(-18deg);
+  opacity: 0;
+}
+.success-overlay.show .stamp-wrap {
+  animation: stamp-drop 650ms var(--ease-in-out) forwards;
+}
+@keyframes stamp-drop {
+  0% { transform: translateY(-60px) scale(0.6) rotate(-18deg); opacity: 0; }
+  60% { transform: translateY(6px) scale(1.05) rotate(2deg); opacity: 1; }
+  80% { transform: translateY(-4px) scale(0.98) rotate(-1deg); }
+  100% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; }
+}
+
+.stamp-ripple {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid var(--color-gold);
+  opacity: 0;
+}
+.success-overlay.show .stamp-ripple {
+  animation: ripple 900ms var(--ease-out) 550ms forwards;
+}
+@keyframes ripple {
+  0% { transform: scale(0.8); opacity: 0.8; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+
+.success-overlay h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  opacity: 0;
+}
+.success-overlay p {
+  color: var(--color-text-dim);
+  opacity: 0;
+}
+.success-overlay.show h2,
+.success-overlay.show p {
+  animation: fade-up var(--dur-slow) var(--ease-out) 500ms forwards;
+}
+
+.reset-countdown {
+  margin-top: 28px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--color-text-faint);
+  opacity: 0;
+}
+.success-overlay.show .reset-countdown {
+  animation: fade-up var(--dur-slow) var(--ease-out) 800ms forwards;
+}
+
+.pc-deauth-link {
+  text-align: center;
+  padding: 16px;
+  font-size: 0.72rem;
+  color: var(--color-text-faint);
+  font-family: var(--font-mono);
+}
+.pc-deauth-link button {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  opacity: 0.7;
+}
+.pc-deauth-link button:hover { opacity: 1; color: var(--color-gold-soft); }
+
+@media (max-width: 640px) {
+  .pin-digit { width: 38px; height: 50px; font-size: 1.2rem; }
+  .position-block { padding: 20px; }
+}

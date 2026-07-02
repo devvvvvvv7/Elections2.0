@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("schoolElection_theme");
+        if (t === "light") document.documentElement.setAttribute("data-theme", "light");
+      } catch (e) {}
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Control Admin — Student Council Election</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body>
+
+  <button class="theme-toggle-btn" id="themeToggleBtn" type="button" aria-label="Toggle dark/light theme" title="Toggle dark/light theme">
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke-linecap="round"/></svg>
+  </button>
+
+  <div class="loader-overlay" id="loaderOverlay">
+    <div class="seal">
+      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle class="seal-ring" cx="32" cy="32" r="27"/>
+        <path class="seal-check" d="M20 33 L28 41 L45 23"/>
+      </svg>
+    </div>
+    <div class="loader-text">Verifying credentials…</div>
+  </div>
+
+  <!-- ===================== LOGIN ===================== -->
+  <div class="login-shell" id="loginShell" style="display:none;">
+    <form class="glass-card login-card fade-up" id="loginForm">
+      <div class="seal">
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle class="seal-ring" cx="32" cy="32" r="27"/>
+          <path class="seal-check" d="M20 33 L28 41 L45 23"/>
+        </svg>
+      </div>
+      <p class="login-role">Control Admin</p>
+      <h2>Election Control Sign In</h2>
+
+      <div class="field-group">
+        <label for="loginEmail">Email Address</label>
+        <input type="email" id="loginEmail" required autocomplete="username" placeholder="admin@school.edu" />
+      </div>
+      <div class="field-group">
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" required autocomplete="current-password" placeholder="••••••••" />
+      </div>
+
+      <p class="login-error" id="loginError"></p>
+
+      <button type="submit" class="btn btn-primary btn-block" id="loginBtn">
+        <span class="btn-label">Sign In</span><span class="spinner"></span>
+      </button>
+      <a class="login-back" href="index.html">← Back to home</a>
+    </form>
+  </div>
+
+  <!-- ===================== DASHBOARD ===================== -->
+  <div class="dash-shell" id="dashShell" style="display:none;">
+    <header class="dash-topbar">
+      <div class="dash-brand">
+        <span class="emblem-mini">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10V6z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <span class="titles">
+          <span class="role-tag">Control Admin</span><br />
+          <strong data-school-name>School Election</strong>
+        </span>
+      </div>
+      <div class="dash-right">
+        <div class="dash-clock">
+          <span data-clock-time>--:--:--</span>
+          <span class="clock-date" data-clock-date>—</span>
+        </div>
+        <button class="btn btn-ghost btn-sm btn-logout" id="logoutBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Logout
+        </button>
+      </div>
+    </header>
+
+    <main class="dash-main">
+
+      <div class="dash-section-title"><h2>Live Overview</h2><span id="dashStatusBadge" class="status-badge status-not_started"><span class="dot"></span>Loading…</span></div>
+
+      <div class="stats-grid stagger">
+        <div class="glass-card stat-card" style="--d:0">
+          <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="stat-label">Live Votes Cast</div>
+          <div class="stat-value" id="voteCountValue">0</div>
+          <div class="stat-sub">Ballots submitted so far</div>
+        </div>
+
+        <div class="glass-card stat-card" style="--d:1">
+          <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="stat-label">Turnout So Far</div>
+          <div class="stat-value" id="turnoutValue">—</div>
+          <div class="stat-sub">Of total eligible voters</div>
+        </div>
+
+        <div class="glass-card stat-card" style="--d:2">
+          <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12l2.5 2.5L16 9" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="stat-label">Voting Status</div>
+          <div class="stat-value" id="votingStatusValue" style="font-size:1.3rem;">—</div>
+          <div class="stat-sub">Current ballot availability</div>
+        </div>
+
+        <div class="glass-card stat-card" style="--d:3">
+          <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="stat-label">Total Eligible Voters</div>
+          <div class="eligible-row">
+            <input type="number" min="0" id="eligibleInput" placeholder="e.g. 850" />
+            <button class="btn btn-ghost btn-sm" id="eligibleSaveBtn">Save</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="dash-section-title"><h2>Election Controls</h2></div>
+      <div class="action-grid stagger">
+        <div class="glass-card action-card start" style="--d:0">
+          <div class="action-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+          <h3>Start Voting</h3>
+          <p>Opens the ballot instantly on every Voting PC.</p>
+          <button class="btn btn-success btn-block" id="startVotingBtn">
+            <span class="btn-label">Start Voting</span><span class="spinner"></span>
+          </button>
+        </div>
+
+        <div class="glass-card action-card next" style="--d:1">
+          <div class="action-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>Allow Next Voter</h3>
+          <p>Dismisses the "Thank You" screen on every Voting PC so the next student can vote, without pausing the election.</p>
+          <button class="btn btn-primary btn-block" id="nextVoterBtn">
+            <span class="btn-label">Allow Next Voter</span><span class="spinner"></span>
+          </button>
+        </div>
+
+        <div class="glass-card action-card stop" style="--d:2">
+          <div class="action-icon"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/></svg></div>
+          <h3>Stop Voting</h3>
+          <p>Pauses voting. It can be resumed by starting again.</p>
+          <button class="btn btn-ghost btn-block" id="stopVotingBtn">
+            <span class="btn-label">Stop Voting</span><span class="spinner"></span>
+          </button>
+        </div>
+
+        <div class="glass-card action-card end" style="--d:3">
+          <div class="action-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4" stroke-linecap="round"/></svg></div>
+          <h3>End Election</h3>
+          <p>Permanently locks voting and unlocks results.</p>
+          <button class="btn btn-danger btn-block" id="endElectionBtn">
+            <span class="btn-label">End Election</span><span class="spinner"></span>
+          </button>
+        </div>
+
+        <div class="glass-card action-card reset" style="--d:4">
+          <div class="action-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>Reset Election</h3>
+          <p>Erases all ballots and restores the election to Not Started.</p>
+          <button class="btn btn-ghost btn-block" id="resetElectionBtn">
+            <span class="btn-label">Reset Election</span><span class="spinner"></span>
+          </button>
+        </div>
+      </div>
+
+      <div class="dash-section-title"><h2>School Branding</h2></div>
+      <div class="glass-card manage-card" style="max-width:640px;">
+        <h3>Logo Image</h3>
+
+        <div class="field-group">
+          <label>Upload From Device</label>
+          <div class="photo-input-row">
+            <label class="photo-upload-btn">
+              Upload Photo
+              <input type="file" id="logoUploadFile" accept="image/*" hidden />
+            </label>
+            <span class="text-faint">or paste a URL below (e.g. a GitHub raw link)</span>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="logoUrlInput">Logo Image URL</label>
+          <input type="text" id="logoUrlInput" placeholder="https://raw.githubusercontent.com/yourname/yourrepo/main/logo.png" />
+        </div>
+        <p class="text-faint" style="font-size:0.78rem; margin:-8px 0 14px;">
+          Upload a file or paste a direct image link. It'll appear on the homepage, every admin dashboard, and the voting kiosk header.
+        </p>
+        <div class="photo-preview" id="logoPreview" style="display:none;">
+          <img id="logoPreviewImg" alt="Logo preview" />
+          <button type="button" class="btn btn-ghost btn-sm" id="logoClearBtn">Remove</button>
+        </div>
+        <button class="btn btn-primary btn-sm" id="logoSaveBtn" style="margin-top:10px;">
+          <span class="btn-label">Save Logo</span><span class="spinner"></span>
+        </button>
+      </div>
+
+      <div class="dash-section-title"><h2>Manage Positions &amp; Candidates</h2></div>
+      <div class="manage-grid">
+
+        <!-- Positions -->
+        <div class="glass-card manage-card">
+          <h3>Positions</h3>
+          <div class="manage-list" id="positionsManageList"></div>
+          <form class="manage-add-form" id="addPositionForm">
+            <input type="text" id="newPositionTitle" placeholder="e.g. Sports Captain" required />
+            <button type="submit" class="btn btn-primary btn-sm" id="addPositionBtn">
+              <span class="btn-label">Add</span><span class="spinner"></span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Candidates -->
+        <div class="glass-card manage-card manage-card-wide">
+          <h3>Candidates</h3>
+
+          <div class="field-group">
+            <label for="candidateFilterSelect">Showing candidates for</label>
+            <select id="candidateFilterSelect"></select>
+          </div>
+
+          <div class="manage-list" id="candidatesManageList"></div>
+
+          <form class="candidate-add-form" id="addCandidateForm">
+            <div class="field-group">
+              <label for="newCandidateName">Candidate Name</label>
+              <input type="text" id="newCandidateName" placeholder="e.g. Priya Verma" required />
+            </div>
+            <div class="field-group">
+              <label for="newCandidatePosition">Position</label>
+              <select id="newCandidatePosition" required></select>
+            </div>
+            <div class="field-group">
+              <label>Photo (optional)</label>
+              <div class="photo-input-row">
+                <label class="photo-upload-btn">
+                  Upload Photo
+                  <input type="file" id="newCandidatePhotoFile" accept="image/*" hidden />
+                </label>
+                <span class="text-faint">or paste a URL (e.g. a GitHub raw link)</span>
+              </div>
+              <input type="text" id="newCandidatePhotoUrl" placeholder="https://example.com/photo.jpg" style="margin-top:8px;" />
+              <div class="photo-preview" id="newCandidatePhotoPreview" style="display:none;">
+                <img id="newCandidatePhotoPreviewImg" alt="Preview" />
+                <button type="button" class="btn btn-ghost btn-sm" id="clearPhotoBtn">Remove</button>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" id="addCandidateBtn">
+              <span class="btn-label">Add Candidate</span><span class="spinner"></span>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="dash-section-title"><h2>Audit Log</h2></div>
+      <div class="audit-tabs" id="auditTabs">
+        <button type="button" class="audit-tab is-active" data-category="all">All Activity</button>
+        <button type="button" class="audit-tab" data-category="auth">Sign In / Out</button>
+        <button type="button" class="audit-tab" data-category="voting">Voting Control</button>
+        <button type="button" class="audit-tab" data-category="roster">Positions &amp; Candidates</button>
+        <button type="button" class="audit-tab" data-category="results">Results</button>
+      </div>
+      <div class="glass-card audit-card">
+        <div class="audit-log-scroll">
+          <table class="audit-table">
+            <thead>
+              <tr><th>Action</th><th>Role</th><th>Performed By</th><th>Timestamp</th></tr>
+            </thead>
+            <tbody id="auditTableBody">
+              <tr><td colspan="4"><div class="empty-state">Loading audit log…</div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Firebase SDK (compat) -->
+  <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-database-compat.js"></script>
+
+  <script>window.FIREBASE_APP_NAME = "control-admin";</script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/control-admin.js"></script>
+</body>
+</html>
